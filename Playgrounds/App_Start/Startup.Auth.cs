@@ -58,11 +58,13 @@ namespace Playgrounds
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            string googlCid = System.Configuration.ConfigurationManager.AppSettings["googleClientId"];
+            string googlCsecret = System.Configuration.ConfigurationManager.AppSettings["googleClientSecret"];
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = googlCid,
+                ClientSecret = googlCsecret
+            });
         }
     }
 }
