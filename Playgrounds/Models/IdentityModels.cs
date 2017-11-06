@@ -18,6 +18,12 @@ namespace Playgrounds.Models
         }
     }
 
+    public class ApplicationRole : IdentityRole
+    {
+        public ApplicationRole() : base() { }
+        public ApplicationRole(string roleName) : base() { }
+    }
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -29,5 +35,7 @@ namespace Playgrounds.Models
         {
             return new ApplicationDbContext();
         }
+
+        //public System.Data.Entity.DbSet<Playgrounds.Models.RoleViewModel> RoleViewModels { get; set; }
     }
 }

@@ -94,3 +94,6 @@ E:\Visual Studio 2017\Projects\Playgrounds\Playgrounds\bin\Microsoft.AI.Web.xml
 E:\Visual Studio 2017\Projects\Playgrounds\Playgrounds\obj\Debug\Playgrounds.csprojResolveAssemblyReference.cache
 E:\Visual Studio 2017\Projects\Playgrounds\Playgrounds\obj\Debug\Playgrounds.dll
 E:\Visual Studio 2017\Projects\Playgrounds\Playgrounds\obj\Debug\Playgrounds.pdb
+E:\Visual Studio 2017\Projects\Playgrounds\Playgrounds\obj\Debug\Playgrounds.Migrations.InitialCreate.resources
+E:\Visual Studio 2017\Projects\Playgrounds\Playgrounds\obj\Debug\Playgrounds.csproj.GenerateResource.Cache
+E:\Visual Studio 2017\Projects\Playgrounds\Playgrounds\obj\Debug\Playgrounds.Migrations.role.resources
