@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PlaygroundModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AspNetRole">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Discriminator" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="AspNetUsers" Relationship="Self.AspNetUserRoles" FromRole="AspNetRoles" ToRole="AspNetUsers" />
+  </EntityType>
+  <EntityType Name="AspNetUser">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+    <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+    <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+    <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+    <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="playgrounds" Relationship="Self.FK_play_user" FromRole="AspNetUsers" ToRole="playgrounds" />
+    <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+  </EntityType>
+  <EntityType Name="Inspecation">
+    <Key>
+      <PropertyRef Name="InspecationID" />
+    </Key>
+    <Property Name="InspecationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Playground_ID" Type="Int32" />
+    <Property Name="InspecationMan" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PlaygroundCondition" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+    <Property Name="InspecationCreatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="playground" Relationship="Self.FK_inspecation_play" FromRole="Inspecations" ToRole="playgrounds" />
+  </EntityType>
+  <EntityType Name="playground">
+    <Key>
+      <PropertyRef Name="PlaygroundID" />
+    </Key>
+    <Property Name="PlaygroundID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PlayGroundName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="PlaygroundOther" Type="String" MaxLength="450" FixedLength="false" Unicode="true" />
+    <Property Name="PlaygroundCreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="User_ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="AspNetUser" Relationship="Self.FK_play_user" FromRole="playgrounds" ToRole="AspNetUsers" />
+    <NavigationProperty Name="Inspecations" Relationship="Self.FK_inspecation_play" FromRole="playgrounds" ToRole="Inspecations" />
+  </EntityType>
+  <Association Name="FK_play_user">
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="0..1" />
+    <End Role="playgrounds" Type="Self.playground" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AspNetUsers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="playgrounds">
+        <PropertyRef Name="User_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_inspecation_play">
+    <End Role="playgrounds" Type="Self.playground" Multiplicity="0..1" />
+    <End Role="Inspecations" Type="Self.Inspecation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="playgrounds">
+        <PropertyRef Name="PlaygroundID" />
+      </Principal>
+      <Dependent Role="Inspecations">
+        <PropertyRef Name="Playground_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AspNetUserRoles">
+    <End Role="AspNetRoles" Type="Self.AspNetRole" Multiplicity="*" />
+    <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRole" />
+    <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+    <EntitySet Name="Inspecations" EntityType="Self.Inspecation" />
+    <EntitySet Name="playgrounds" EntityType="Self.playground" />
+    <AssociationSet Name="FK_play_user" Association="Self.FK_play_user">
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+      <End Role="playgrounds" EntitySet="playgrounds" />
+    </AssociationSet>
+    <AssociationSet Name="FK_inspecation_play" Association="Self.FK_inspecation_play">
+      <End Role="playgrounds" EntitySet="playgrounds" />
+      <End Role="Inspecations" EntitySet="Inspecations" />
+    </AssociationSet>
+    <AssociationSet Name="AspNetUserRoles" Association="Self.AspNetUserRoles">
+      <End Role="AspNetRoles" EntitySet="AspNetRoles" />
+      <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
